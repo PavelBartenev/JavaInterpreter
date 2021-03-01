@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="JavaInterpreter"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/pavel/CLionProjects/untitled/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/pavel/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/pavel/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/pavel/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/pavel/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/pavel/CLionProjects/untitled/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/pavel/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/pavel/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/pavel/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/pavel/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/pavel/CLionProjects/untitled/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/pavel/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/pavel/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/pavel/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/pavel/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="JavaInterpreter">
+				<Option output="/home/pavel/CLionProjects/untitled/cmake-build-debug/JavaInterpreter" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/pavel/CLionProjects/untitled/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/pavel/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 JavaInterpreter"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/pavel/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/pavel/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/pavel/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="JavaInterpreter/fast">
+				<Option output="/home/pavel/CLionProjects/untitled/cmake-build-debug/JavaInterpreter" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/pavel/CLionProjects/untitled/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/7"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
+					<Add directory="/usr/include/c++/7/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/pavel/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 JavaInterpreter/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/pavel/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/pavel/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/pavel/CLionProjects/untitled/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/pavel/CLionProjects/untitled/driver.cc">
+			<Option target="JavaInterpreter"/>
+		</Unit>
+		<Unit filename="/home/pavel/CLionProjects/untitled/driver.hh">
+			<Option target="JavaInterpreter"/>
+		</Unit>
+		<Unit filename="/home/pavel/CLionProjects/untitled/jpparser.cc">
+			<Option target="JavaInterpreter"/>
+		</Unit>
+		<Unit filename="/home/pavel/CLionProjects/untitled/jpparser.cc.rule">
+			<Option target="JavaInterpreter"/>
+		</Unit>
+		<Unit filename="/home/pavel/CLionProjects/untitled/jpparser.hh">
+			<Option target="JavaInterpreter"/>
+		</Unit>
+		<Unit filename="/home/pavel/CLionProjects/untitled/jpscanner.cc">
+			<Option target="JavaInterpreter"/>
+		</Unit>
+		<Unit filename="/home/pavel/CLionProjects/untitled/jpscanner.cc.rule">
+			<Option target="JavaInterpreter"/>
+		</Unit>
+		<Unit filename="/home/pavel/CLionProjects/untitled/main.cc">
+			<Option target="JavaInterpreter"/>
+		</Unit>
+		<Unit filename="/home/pavel/CLionProjects/untitled/scanner.cc">
+			<Option target="JavaInterpreter"/>
+		</Unit>
+		<Unit filename="/home/pavel/CLionProjects/untitled/scanner.hh">
+			<Option target="JavaInterpreter"/>
+		</Unit>
+		<Unit filename="/home/pavel/CLionProjects/untitled/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
