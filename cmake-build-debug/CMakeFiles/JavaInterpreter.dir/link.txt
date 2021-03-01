@@ -1,1 +1,0 @@
-/usr/bin/c++  -g   CMakeFiles/JavaInterpreter.dir/main.cc.o CMakeFiles/JavaInterpreter.dir/driver.cc.o CMakeFiles/JavaInterpreter.dir/scanner.cc.o CMakeFiles/JavaInterpreter.dir/jpparser.cc.o CMakeFiles/JavaInterpreter.dir/jpscanner.cc.o  -o JavaInterpreter 
