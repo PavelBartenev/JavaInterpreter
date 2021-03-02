@@ -4,6 +4,10 @@
 #include <string>
 #include <list>
 #include <utility>
+#include <variant>
+
+using SomeType = std::variant<int, bool, std::string>;
+
 
 enum struct op_id {
     AND,
@@ -22,8 +26,19 @@ enum struct type_id {
     INT,
     BOOL,
     VOID,
-    ID
+    ID,
+    STRING
 };
+
+type_id GetType(SomeType& obj) {
+    if (std::holds_alternative<int>(obj)) {
+        return type_id::INT;
+    } else if (std::holds_alternative<bool>(obj)){
+        return type_id::BOOL;
+    } else if (std::holds_alternative<std::string>(obj)){
+        return type_id::STRING;
+    }
+}
 
 struct ExpressionBase {
 };
@@ -139,8 +154,77 @@ struct RetStmt : public StatementBase {
 };
 
 struct CallStmt : public StatementBase {
-
+   //TODO();
 };
+
+template <type_id type_id>
+struct ParamStmt : public StatementBase {
+    std::string id;
+
+    ParamStmt(std::string& id) :
+    id(id) {}
+};
+
+struct Parameters : StatementBase {
+    std::list<StatementBase*> params;
+
+    Parameters() = default;
+
+   Parameters(StatementBase* param, Parameters* other) :
+   params(other->params) {
+       params.push_front(param);
+   }
+};
+
+template <type_id type_id>
+struct VarDecl : StatementBase {
+    std::string id;
+
+    VarDecl(std::string& id) :
+    id(id) {}
+};
+
+template <type_id type_id>
+struct FuncDecl : StatementBase {
+    std::string id;
+    Parameters* params;
+    StatementsBlock* code;
+
+    FuncDecl(std::string& id, Parameters* params, StatementsBlock* code) :
+    id(id), params(params), code(code) {}
+};
+
+struct ClassBody :  StatementBase {
+    std::list<StatementBase*> stmts;
+
+    ClassBody() = default;
+
+    ClassBody(StatementBase* stmt, ClassBody* other)
+    : stmts(other->stmts) {
+        stmts.push_front(stmt);
+    }
+};
+
+struct Class : StatementBase {
+    ClassBody* body;
+    std::string id;
+
+    Class(ClassBody* body, std::string& id) :
+    body(body), id(id) {}
+};
+
+struct ClassesBlock : StatementBase {
+    std::list<Class*> classes;
+
+    ClassesBlock() = default;
+
+    ClassesBlock(Class* next, ClassesBlock* other) :
+    classes(other->classes) {
+        classes.push_front(next);
+    }
+};
+
+
 
 
 
