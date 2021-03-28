@@ -6,4 +6,3 @@ namespace jp {
         yyrestart(&file);
     }
 }
-
