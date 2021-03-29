@@ -3,20 +3,12 @@
 
 %defines
 
-// Enable locations support
 %locations
 
-// Enable tracing
-%define parse.trace
+//%define parse.trace
 
-// This option with next makes
-// yylex to have signature
-// as below
 %define api.token.constructor
 
-// Declare value type - variant
-// Like union, but for C++
-// Can store any C++ type
 %define api.value.type variant
 
 %define api.namespace {jp}
@@ -88,77 +80,159 @@
    TODO     "later"
    NEW      "new"
    NOT      "!"
+   ELSE     "else"
+   QUOTES   "\""
 ;
 
 %token <int>            int     "Int"
 %token <float>          float   "Float"
 %token <std::string>    id      "id"
+%token <std::string>    string  "string"
 
 %nterm <AST>              programm
 %nterm <MainFunc*>        main_func
-%nterm <CLassesBlock*>    classes_block
+%nterm <ClassesBlock*>    classes_block
 %nterm <Class*>           class
 %nterm <ClassBody*>       class_body
-%nterm <FuncDecl*>        funcdecl
-%nterm <VarDecl*>         vardecl
+%nterm <StatementBase*>   funcdecl
+%nterm <StatementBase*>   vardecl
 %nterm <Parameters*>      parameters
-%nterm <Parameter*>       parameter
+%nterm <StatementBase*>   parameter
 %nterm <StatementsBlock*> statements_block
 %nterm <StatementBase*>   statement
+%nterm <StatementBase*>   statements_group
 %nterm <ExpressionBase*>  expression
 %nterm <op_id>            binop
 %nterm <type_id>          type
-
+%nterm <Lvalue*>          lvalue
+%nterm <CallStmt*>        method_invocation
 %%
+
+%left "||";
+%left "&&";
+%left ">" "<" "==";
+%left "+" "-" "%";
+%left "*" "/";
+
 %start programm;
 
 NLS: NEWLINE | NEWLINE NLS
 
+MBNLS: %empty | NLS
+
 programm:
-    main_func[code] classes_block[decls]
-    { driver.result = AST($code, $decls); }
+    main_func[code] NLS classes_block[decls]
+    { driver.result = new AST($code, $decls); }
 
 main_func:
-    INT MAIN LBRACE RBRACE NLS LPAREN statements_block[code] RBRACE
+    INT MAIN LPAREN RPAREN MBNLS LBRACE MBNLS statements_block[code] RBRACE
     { $$ = new MainFunc($code); }
 
 classes_block:
     %empty
     { $$ = new ClassesBlock(); }
-    | class[next] classes_block[other]
+    | class[next] NLS classes_block[other]
     { $$ = new ClassesBlock($next, $other); }
 
 class:
-    CLASS id LPAREN class_body[body] RPAREN
+    CLASS id MBNLS LBRACE MBNLS class_body[body] MBNLS RBRACE
     { $$ = new Class($id, $body); }
 
 class_body:
     %empty
     { $$ = new ClassBody(); }
-    | vardecl[var] class_body[other]
+    | vardecl[var] SEMICOL NLS class_body[other]
     { $$ = new ClassBody($var, $other); }
-    | funcdecl[func] class_body[other]
+    | funcdecl[func] NLS class_body[other]
     { $$ = new ClassBody($func, $other); }
 
 funcdecl:
-    PUBLIC type[retval_type] id LBRACE parameters[params] RBRACE LPAREN statements_block[code] RPAREN
-    { $$ = new FuncDecl<retval_type>($id, $params, $code); }
+    PUBLIC type[retval_type] id LPAREN parameters[params] RPAREN MBNLS LBRACE MBNLS statements_block[code] RBRACE
+    { switch($retval_type) {
+         case type_id::INT :
+             $$ = new FuncDecl<type_id::INT>($id, $params, $code);
+             break;
+         case type_id::BOOL :
+             $$ = new FuncDecl<type_id::BOOL>($id, $params, $code);
+             break;
+         case type_id::VOID :
+             $$ = new FuncDecl<type_id::VOID>($id, $params, $code);
+             break;
+         case type_id::ID :
+             $$ = new FuncDecl<type_id::ID>($id, $params, $code);
+             break;
+         case type_id::STRING :
+             $$ = new FuncDecl<type_id::STRING>($id, $params, $code);
+             break;
+      }
+    }
 
 vardecl:
-    type[var_type] id SEMICOL
-    { $$ = VarDecl<var_type>($id); }
+    type[var_type] id
+    { switch($var_type) {
+         case type_id::INT :
+                   $$ = new VarDecl<type_id::INT>($id);
+                   break;
+         case type_id::BOOL :
+                   $$ = new VarDecl<type_id::BOOL>($id);
+                   break;
+         case type_id::VOID :
+                   $$ = new VarDecl<type_id::VOID>($id);
+                   break;
+         case type_id::ID :
+                   $$ = new VarDecl<type_id::ID>($id);
+                   break;
+         case type_id::STRING :
+                   $$ = new VarDecl<type_id::STRING>($id);
+                   break;
+      }
+    }
 
 parameters:
     %empty
     { $$ = new Parameters(); }
     | parameter[param] parameters[other]
-    { $$ = new Parameters($param, $other) }
+    { $$ = new Parameters($param, $other); }
 
 parameter:
     type[param_type] id
-    { $$ = new Parameter<param_type> ($id); }
+    { switch($param_type) {
+	case type_id::INT :
+		 $$ = new ParamStmt<type_id::INT>($id);
+		 break;
+	case type_id::BOOL :
+		 $$ = new ParamStmt<type_id::BOOL>($id);
+		 break;
+	case type_id::VOID :
+		 $$ = new ParamStmt<type_id::VOID>($id);
+		 break;
+	case type_id::ID :
+		 $$ = new ParamStmt<type_id::ID>($id);
+		 break;
+	case type_id::STRING :
+		 $$ = new ParamStmt<type_id::STRING>($id);
+		 break;
+       }
+    }
     | COMMA type[param_type] id
-    { $$ = new Parameter<param_type> ($id); }
+    { switch($param_type) {
+	     case type_id::INT :
+		       $$ = new ParamStmt<type_id::INT>($id);
+		       break;
+	     case type_id::BOOL :
+		       $$ = new ParamStmt<type_id::BOOL>($id);
+		       break;
+	     case type_id::VOID :
+		       $$ = new ParamStmt<type_id::VOID>($id);
+		       break;
+	     case type_id::ID :
+		       $$ = new ParamStmt<type_id::ID>($id);
+		       break;
+	     case type_id::STRING :
+		       $$ = new ParamStmt<type_id::STRING>($id);
+		       break;
+      }
+    }
 
 type:
     INT
@@ -172,34 +246,38 @@ type:
 
 statements_block:
     %empty
-    { $$ = StatementsBlock(); }
-    | statement[code] statements_block[other]
-    { $$ = StatementsBlock($code, $other); }
-    | LPAREN statements_block[this] RPAREN
-    { $$ = StatementsBlock($this); }
+    { $$ = new StatementsBlock(); }
+    | MBNLS statement[code] SEMICOL MBNLS statements_block[other]
+    { $$ = new StatementsBlock($code, $other); }
+    | MBNLS LBRACE MBNLS statements_block[this] RBRACE MBNLS
+    { $$ = new StatementsBlock($this); }
+    | MBNLS statements_group[code] NLS statements_block[other]
+    { $$ = new StatementsBlock($code, $other); }
 
 statement:
-    ASSERT LBRACE expression[code] RBRACE
+    ASSERT LPAREN expression[code] RPAREN
     { $$ = new AssertStmt($code); }
     | vardecl[decl]
-    { $$ = new DeclStmt($decl); }
-    | IF LBRACE expression[cond] RBRACE statements_block[code]
-    { $$ = new IfStmt($cond, $code); }
-    | IF LBRACE expression[cond] RBRACE statements_block[code] ELSE statements_block[other_code]
-    { $$ = new IfStmt($cond, $code, $other_code); }
-    | WHILE LBRACE expression[cond] RBRACE statements_block[code]
-    { $$ = new WhileStmt($cond, $code); }
-    | PRINT LBRACE expression[code] RBRACE SEMICOL
+    { $$ = $decl; }
+    | PRINT LPAREN expression[code] RPAREN
     { $$ = new PrintStmt($code); }
-    | lvalue[var] ASSIGN expression[code] SEMICOL
+    | lvalue[var] ASSIGN expression[code]
     { $$ = new AssignStmt($var, $code); }
-    | RET expression[code] SEMICOL
+    | RET expression[code]
     { $$ = new RetStmt($code); }
-    | method_invocation[call] SEMICOL
-    { $$ = new CallStmt($call); }
+//    | method_invocation[call] SEMICOL
+//    { $$ = new CallStmt($call); }
+
+statements_group:
+     IF LPAREN expression[cond] RPAREN MBNLS LBRACE MBNLS statements_block[code] MBNLS RBRACE
+     { $$ = new IfStmt($cond, $code); }
+     | IF LPAREN expression[cond] RPAREN MBNLS LBRACE MBNLS statements_block[code] MBNLS RBRACE ELSE MBNLS LBRACE MBNLS statements_block[other_code] MBNLS RBRACE
+     { $$ = new IfStmt($cond, $code, $other_code); }
+     | WHILE LPAREN expression[cond] RPAREN MBNLS LBRACE MBNLS statements_block[code] MBNLS RBRACE
+     { $$ = new WhileStmt($cond, $code); }
 
 method_invocation:
-    TODO
+   TODO
     {}
 
 field_invocation:
@@ -208,21 +286,80 @@ field_invocation:
 
 lvalue:
     id
-    { $$ = new IdExpr($id); }
+    { $$ = new Lvalue($id); }
 
 expression:
     expression[first] binop[op] expression[second]
-    { $$ = new BinExpr<$op>($first, $second); }
-    | NEW type[obj_type] LBRACE RBARCE
-    { $$ = new NewExpr<$obj_type>()); }
+    { switch($op) {
+	   case op_id::AND :
+		     $$ = new BinExpr<op_id::AND>($first, $second);
+		     break;
+	   case op_id::OR :
+		     $$ = new BinExpr<op_id::OR>($first, $second);
+		     break;
+	   case op_id::LESS :
+		     $$ = new BinExpr<op_id::LESS>($first, $second);
+		     break;
+	   case op_id::GREATER :
+		     $$ = new BinExpr<op_id::GREATER>($first, $second);
+		     break;
+	   case op_id::EQUAL :
+		     $$ = new BinExpr<op_id::EQUAL>($first, $second);
+		     break;
+	   case op_id::PLUS :
+		     $$ = new BinExpr<op_id::PLUS>($first, $second);
+		     break;
+	   case op_id::MINUS :
+		     $$ = new BinExpr<op_id::MINUS>($first, $second);
+		     break;
+	   case op_id::STAR :
+		     $$ = new BinExpr<op_id::STAR>($first, $second);
+		     break;
+	   case op_id::SLASH :
+		     $$ = new BinExpr<op_id::SLASH>($first, $second);
+		     break;
+	   case op_id::PERCENT :
+		     $$ = new BinExpr<op_id::PERCENT>($first, $second);
+		     break;
+      }
+    }
+    | NEW type[obj_type] LPAREN RPAREN
+    { switch($obj_type) {
+	     case type_id::INT :
+		       $$ = new NewExpr<type_id::INT>();
+		       break;
+	     case type_id::BOOL :
+		       $$ = new NewExpr<type_id::BOOL>();
+		       break;
+	     case type_id::VOID :
+		       $$ = new NewExpr<type_id::VOID>();
+		       break;
+	     case type_id::ID :
+		       $$ = new NewExpr<type_id::ID>();
+		       break;
+	     case type_id::STRING :
+		       $$ = new NewExpr<type_id::STRING>();
+		       break;
+       }
+    }
     | NOT expression[expr]
     { $$ = new NotExpr($expr); }
-    | LBRACE expression[expr] RBRACE
+    | LPAREN expression[expr] RPAREN
     { $$ = $expr; }
     | id
     { $$ = new IdExpr($id); }
     | int[val]
-    { $$ = new NumExpr($val); }
+    { $$ = new LitExpr($val); }
+    | string[val]
+    {  if ($val.length() == 2) {
+    	   $val = "";
+       } else {
+       	   $val.pop_back();
+           $val.erase(0, 1);
+       }
+       $$ = new LitExpr($val); }
+//    | bool[val]
+//    { $$ = new LitExpr($val); }
 
 binop:
     AND

@@ -24,4 +24,3 @@ namespace jp {
         virtual jp::parser::symbol_type ScanToken();
     };
 }
-

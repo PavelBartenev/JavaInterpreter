@@ -13,7 +13,7 @@ namespace jp {
     public:
         Driver();
 
-        AST parse(std::string &fname);
+        AST* parse(std::string &fname);
 
         friend class jp::parser;
 
@@ -23,6 +23,6 @@ namespace jp {
 
         std::ifstream stream;
 
-        AST result;
+        AST* result;
     };
 }
