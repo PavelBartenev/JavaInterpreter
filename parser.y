@@ -5,7 +5,7 @@
 
 %locations
 
-%define parse.trace
+//%define parse.trace
 
 %define api.token.constructor
 
