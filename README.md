@@ -6,4 +6,4 @@ To run on Linux type in terminal:
 ~$ make               
 ~$ ./JavaInterpreter {input_file}            
 
-As input file you can use "test" file with an example of working programm.
+As input file you can use "test" file with an example of working program.
