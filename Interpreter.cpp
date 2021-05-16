@@ -19,7 +19,6 @@ void Interpreter::Visit(ClassBody *class_body) {
 }
 
 
-
 void Interpreter::Visit(StatementsBlock *statements) {
     if (return_called) {
         return;
@@ -252,23 +251,3 @@ void Interpreter::Visit(WhileStmt *while_stmt) {
         while_stmt->condition->Accept(this);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
