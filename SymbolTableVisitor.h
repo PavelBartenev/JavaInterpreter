@@ -4,10 +4,9 @@
 #include <map>
 #include <string>
 #include "Types_codes.h"
+#include "SymbolsAndScopes/Scopes.h"
 
-using SomeType = std::variant<int, bool, std::string>;
-
-class Interpreter : public Visitor {
+class SymbolTableVisitor : public Visitor {
 public:
     void Visit(AST* ast) override;
     void Visit(MainFunc* main) override;
@@ -57,17 +56,16 @@ public:
     virtual void Visit(ParamStmt<type_id::VOID>* param) override;
     virtual void Visit(ParamStmt<type_id::ID>* param) override;
 
+    BaseScope* GetScope();
+    void SetScope(BaseScope* scope);
 
-    int Interpret(AST* ast);
+    void BuildScopesTree(AST* ast);
 
 private:
-    std::map<std::string, SomeType> variables;
+    BaseScope* current_scope = nullptr;
+    std::string cur_class;
 
-    SomeType tos_value;
-    bool return_called = false;
+    std::string cur_param_name;
+    std::string cur_param_type;
 
-    void SetTosValue(SomeType value);
-
-    bool IsTosValueTrue();
-    bool IsValueTrue(SomeType val);
 };
