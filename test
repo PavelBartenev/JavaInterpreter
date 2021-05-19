@@ -24,7 +24,7 @@ class MyClass {
     int x;
     int y;
 
-    public int foo(int a, bool s) {
+    public int foo(int some_number, bool true_check) {
         x = x + a;
         return x;
     }
