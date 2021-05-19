@@ -19,7 +19,7 @@ int main() {
 }
 
 
-class K {
+class MyClass {
 
     int x;
     int y;
