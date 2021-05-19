@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
          print_visitor.PrintTree(result);
     }
 
-    //Check the symboltree: get the name of the second argument
+    //Check the SymbolTree: get the name of the second argument
     auto class_k_scope  = dynamic_cast<ClassSymbol*>(symbol_visitor.GetScope()->elements["MyClass"])->own_scope;
     std::cout << "\n" << dynamic_cast<MethodSymbol*>(class_k_scope->elements["foo"])->params[1]->name;
 
