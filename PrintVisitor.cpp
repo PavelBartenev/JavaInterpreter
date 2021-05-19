@@ -342,3 +342,128 @@ void PrintVisitor::Visit(AST *ast) {
     std::cout << "\n";
     ast->classes->Accept(this);
 }
+
+void PrintVisitor::Visit(FuncDecl<type_id::INT> *decl) {
+    std::string spaces(level, '\t');
+
+    std::cout << spaces << "Func declaration start\n";
+
+    std::cout << spaces << "name: " << decl->id << "\n";
+    std::cout << spaces << "ret type: " << "int" << "\n";
+    std::cout << spaces << "parameters: \n";
+
+    ++level;
+    decl->params->Accept(this);
+
+    std::cout << spaces << "body: \n";
+    decl->code->Accept(this);
+    --level;
+
+    std::cout << spaces << "Func declaration end";
+}
+
+void PrintVisitor::Visit(FuncDecl<type_id::STRING> *decl) {
+    std::string spaces(level, '\t');
+
+    std::cout << spaces << "Func declaration start\n";
+
+    std::cout << spaces << "name: " << decl->id << "\n";
+    std::cout << spaces << "ret type: " << "string" << "\n";
+    std::cout << spaces << "parameters: \n";
+
+    ++level;
+    decl->params->Accept(this);
+
+    std::cout << spaces << "body: \n";
+    decl->code->Accept(this);
+    --level;
+
+    std::cout << spaces << "Func declaration end";
+}
+
+void PrintVisitor::Visit(FuncDecl<type_id::BOOL> *decl) {
+    std::string spaces(level, '\t');
+
+    std::cout << spaces << "Func declaration start\n";
+
+    std::cout << spaces << "name: " << decl->id << "\n";
+    std::cout << spaces << "ret type: " << "bool" << "\n";
+    std::cout << spaces << "parameters: \n";
+
+    ++level;
+    decl->params->Accept(this);
+
+    std::cout << spaces << "body: \n";
+    decl->code->Accept(this);
+    --level;
+
+    std::cout << spaces << "Func declaration end";
+}
+
+void PrintVisitor::Visit(FuncDecl<type_id::ID> *decl) {
+    std::string spaces(level, '\t');
+
+    std::cout << spaces << "Func declaration start\n";
+
+    std::cout << spaces << "name: " << decl->id << "\n";
+    std::cout << spaces << "ret type: " << "id" << "\n";
+    std::cout << spaces << "parameters: \n";
+
+    ++level;
+    decl->params->Accept(this);
+
+    std::cout << spaces << "body: \n";
+    decl->code->Accept(this);
+    --level;
+
+    std::cout << spaces << "Func declaration end";
+}
+
+void PrintVisitor::Visit(FuncDecl<type_id::VOID> *decl) {
+    std::string spaces(level, '\t');
+
+    std::cout << spaces << "Func declaration start\n";
+
+    std::cout << spaces << "name: " << decl->id << "\n";
+    std::cout << spaces << "ret type: " << "void" << "\n";
+    std::cout << spaces << "parameters: \n";
+
+    ++level;
+    decl->params->Accept(this);
+
+    std::cout << spaces << "body: \n";
+    decl->code->Accept(this);
+    --level;
+
+    std::cout << spaces << "Func declaration end";
+}
+
+void PrintVisitor::Visit(Parameters *params) {
+    for (auto& param : params->params)
+        param->Accept(this);
+}
+
+void PrintVisitor::Visit(ParamStmt<type_id::INT> *param) {
+    std::string spaces(level, '\t');
+    std::cout << spaces << "int " << param->id << "\n";
+}
+
+void PrintVisitor::Visit(ParamStmt<type_id::STRING> *param) {
+    std::string spaces(level, '\t');
+    std::cout << spaces << "string " << param->id << "\n";
+}
+
+void PrintVisitor::Visit(ParamStmt<type_id::BOOL> *param) {
+    std::string spaces(level, '\t');
+    std::cout << spaces << "bool " << param->id << "\n";
+}
+
+void PrintVisitor::Visit(ParamStmt<type_id::VOID> *param) {
+    std::string spaces(level, '\t');
+    std::cout << spaces << "void " << param->id << "\n";
+}
+
+void PrintVisitor::Visit(ParamStmt<type_id::ID> *param) {
+    std::string spaces(level, '\t');
+    std::cout << spaces << "id " << param->id << "\n";
+}
