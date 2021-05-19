@@ -251,3 +251,38 @@ void Interpreter::Visit(WhileStmt *while_stmt) {
         while_stmt->condition->Accept(this);
     }
 }
+
+void Interpreter::Visit(FuncDecl<type_id::VOID> *decl) {
+}
+void Interpreter::Visit(FuncDecl<type_id::ID> *decl) {
+}
+void Interpreter::Visit(FuncDecl<type_id::BOOL> *decl) {
+}
+void Interpreter::Visit(FuncDecl<type_id::STRING> *decl) {
+}
+void Interpreter::Visit(FuncDecl<type_id::INT> *decl) {
+}
+
+void Interpreter::Visit(Parameters *params) {
+
+}
+
+void Interpreter::Visit(ParamStmt<type_id::INT> *param) {
+
+}
+
+void Interpreter::Visit(ParamStmt<type_id::STRING> *param) {
+
+}
+
+void Interpreter::Visit(ParamStmt<type_id::BOOL> *param) {
+
+}
+
+void Interpreter::Visit(ParamStmt<type_id::VOID> *param) {
+
+}
+
+void Interpreter::Visit(ParamStmt<type_id::ID> *param) {
+
+}
