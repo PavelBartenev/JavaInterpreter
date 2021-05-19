@@ -22,6 +22,13 @@ public:
     virtual void Visit(VarDecl<type_id::ID>* decl) = 0;
     virtual void Visit(VarDecl<type_id::VOID>* decl) = 0;
 
+    virtual void Visit(FuncDecl<type_id::INT>* decl) = 0;
+    virtual void Visit(FuncDecl<type_id::STRING>* decl) = 0;
+    virtual void Visit(FuncDecl<type_id::BOOL>* decl) = 0;
+    virtual void Visit(FuncDecl<type_id::ID>* decl) = 0;
+    virtual void Visit(FuncDecl<type_id::VOID>* decl) = 0;
+
+
     virtual void Visit(IdExpr* id) = 0;
     virtual void Visit(Lvalue* val) = 0;
     virtual void Visit(AssignStmt* assign) = 0;
@@ -37,4 +44,11 @@ public:
     virtual void Visit(BinExpr<op_id::GREATER>* greater_expr) = 0;
     virtual void Visit(BinExpr<op_id::PERCENT>* percent_expr) = 0;
     virtual void Visit(WhileStmt* while_stmt) = 0;
+
+    virtual void Visit(Parameters* params) = 0;
+    virtual void Visit(ParamStmt<type_id::INT>* param) = 0;
+    virtual void Visit(ParamStmt<type_id::STRING>* param) = 0;
+    virtual void Visit(ParamStmt<type_id::BOOL>* param) = 0;
+    virtual void Visit(ParamStmt<type_id::VOID>* param) = 0;
+    virtual void Visit(ParamStmt<type_id::ID>* param) = 0;
 };

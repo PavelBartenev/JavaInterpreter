@@ -227,6 +227,10 @@ struct ParamStmt : public StatementBase {
 
     ParamStmt(std::string& id) :
     id(id) {}
+
+    void Accept(Visitor* visitor) {
+        visitor->Visit(this);
+    }
 };
 
 struct Parameters : StatementBase {
@@ -238,6 +242,10 @@ struct Parameters : StatementBase {
    params(other->params) {
        params.push_front(param);
    }
+
+    void Accept(Visitor* visitor) {
+        visitor->Visit(this);
+    }
 };
 
 template <type_id type_id>
@@ -263,6 +271,10 @@ struct FuncDecl : StatementBase {
 
     FuncDecl(std::string& id, Parameters* params, StatementsBlock* code) :
     id(id), params(params), code(code) {}
+
+    void Accept(Visitor* visitor) {
+        visitor->Visit(this);
+    }
 };
 
 struct ClassBody :  StatementBase {
@@ -274,6 +286,10 @@ struct ClassBody :  StatementBase {
     : stmts(other->stmts) {
         stmts.push_front(stmt);
     }
+
+    void Accept(Visitor* visitor) {
+        visitor->Visit(this);
+    }
 };
 
 struct Class : StatementBase {
@@ -282,6 +298,10 @@ struct Class : StatementBase {
 
     Class(std::string& id, ClassBody* body) :
     body(body), id(id) {}
+
+    void Accept(Visitor* visitor) {
+        visitor->Visit(this);
+    }
 };
 
 struct ClassesBlock : StatementBase {
@@ -323,33 +343,3 @@ struct AST : StatementsBlock {
         visitor->Visit(this);
     }
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

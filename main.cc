@@ -4,6 +4,8 @@
 #include "driver.hh"
 #include "ast.hh"
 #include "Interpreter.h"
+#include "PrintVisitor.h"
+
 
 int main(int argc, char** argv) {
     std::string fname(argv[1]);
@@ -11,14 +13,13 @@ int main(int argc, char** argv) {
 
     AST* result = driver.parse(fname);
 
-    Interpreter interpreter;
-
-    interpreter.Interpret(result);
-
-  //  std::cout << std::get<int>(interpreter.variables.at("x"));
-   // std::cout << dynamic_cast<VarDecl<type_id::INT>*>(result.main->block->statements.front())->id;
-
+    if (std::string(argv[2]) == "execute") {
+         Interpreter interpreter;
+         interpreter.Interpret(result);
+    } else if (std::string(argv[2]) == "tree") {
+         PrintVisitor print_visitor;
+         print_visitor.PrintTree(result);
+    }
 
     return 0;
 }
-

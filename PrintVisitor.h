@@ -1,13 +1,10 @@
 #pragma once
 
+
 #include "Visitor.h"
-#include <map>
-#include <string>
 #include "Types_codes.h"
 
-using SomeType = std::variant<int, bool, std::string>;
-
-class Interpreter : public Visitor {
+class PrintVisitor : public Visitor {
 public:
     void Visit(AST* ast) override;
     void Visit(MainFunc* main) override;
@@ -48,6 +45,8 @@ public:
     void Visit(BinExpr<op_id::GREATER>* greater_expr) override;
     void Visit(BinExpr<op_id::PERCENT>* percent_expr) override;
 
+    void Visit(WhileStmt* while_stmt) override;
+
     virtual void Visit(Parameters* params) override;
     virtual void Visit(ParamStmt<type_id::INT>* param) override;
     virtual void Visit(ParamStmt<type_id::STRING>* param) override;
@@ -55,20 +54,8 @@ public:
     virtual void Visit(ParamStmt<type_id::VOID>* param) override;
     virtual void Visit(ParamStmt<type_id::ID>* param) override;
 
-    void Visit(WhileStmt* while_stmt) override;
-
-
-    int Interpret(AST* ast);
-
+    int PrintTree(AST* ast);
 
 private:
-    std::map<std::string, SomeType> variables;
-
-    SomeType tos_value;
-    bool return_called = false;
-
-    void SetTosValue(SomeType value);
-
-    bool IsTosValueTrue();
-    bool IsValueTrue(SomeType val);
+    int level = 0;
 };
