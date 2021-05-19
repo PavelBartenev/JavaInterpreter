@@ -34,5 +34,6 @@ add_executable(
         scanner.cc
         ${BISON_JavaParser_OUTPUTS}
         ${FLEX_JavaScanner_OUTPUTS}
-        Visitor.h Forward_declarations.h Types_codes.h Interpreter.h Interpreter.cpp)
+        Visitor.h Forward_declarations.h Types_codes.h Interpreter.h Interpreter.cpp PrintVisitor.h PrintVisitor.cpp SymbolsAndScopes/BaseSymbol.h SymbolsAndScopes/VarSymbol.h SymbolsAndScopes/Scopes.h SymbolTableVisitor.h SymbolTableVisitor.cpp
+         SymbolsAndScopes/BaseSymbol.h SymbolsAndScopes/VarSymbol.h SymbolsAndScopes/Scopes.h SymbolsAndScopes/ClassSymbol.h SymbolsAndScopes/MethodSymbol.h)
 
