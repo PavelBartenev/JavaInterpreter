@@ -24,6 +24,12 @@ public:
     void Visit(VarDecl<type_id::ID>* decl) override;
     void Visit(VarDecl<type_id::VOID>* decl) override;
 
+    virtual void Visit(FuncDecl<type_id::INT>* decl) override;
+    virtual void Visit(FuncDecl<type_id::STRING>* decl) override;
+    virtual void Visit(FuncDecl<type_id::BOOL>* decl) override;
+    virtual void Visit(FuncDecl<type_id::ID>* decl) override;
+    virtual void Visit(FuncDecl<type_id::VOID>* decl) override;
+
     void Visit(IdExpr* id) override;
     void Visit(Lvalue* val) override;
     void Visit(AssignStmt* assign) override;
@@ -41,6 +47,12 @@ public:
 
     void Visit(WhileStmt* while_stmt) override;
 
+    virtual void Visit(Parameters* params) override;
+    virtual void Visit(ParamStmt<type_id::INT>* param) override;
+    virtual void Visit(ParamStmt<type_id::STRING>* param) override;
+    virtual void Visit(ParamStmt<type_id::BOOL>* param) override;
+    virtual void Visit(ParamStmt<type_id::VOID>* param) override;
+    virtual void Visit(ParamStmt<type_id::ID>* param) override;
 
     int PrintTree(AST* ast);
 
